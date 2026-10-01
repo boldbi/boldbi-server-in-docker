@@ -1,15 +1,15 @@
 services:
   id-web:
     container_name: id_web_container
-    image: us-docker.pkg.dev/boldbi-294612/boldbi/bold-identity:16.3.5
+    image: syncfusion/bold-identity:17.1.30
     restart: always
     environment:
       - APP_BASE_URL=<app_base_url>     # use http://host.docker.internal to configure Bold BI in localhost
       - INSTALL_OPTIONAL_LIBS=mongodb,mysql,influxdb,snowflake,oracle,clickhouse,google
       - DEPLOY_MODE=docker_multi_container
       - Is_Common_IDP=true
-      - ID_Version=5.1.24
-      - BI_Version=16.3.5
+      - ID_Version=5.1.25
+      - BI_Version=17.1.30
       - Reports_Version=14.1.18
     volumes:
       - boldservices_data:/application/app_data
@@ -23,7 +23,7 @@ services:
         
   id-api:
     container_name: id_api_container
-    image: us-docker.pkg.dev/boldbi-294612/boldbi/bold-identity-api:16.3.5
+    image: syncfusion/bold-identity-api:17.1.30
     restart: always
     environment:
       - DEPLOY_MODE=docker_multi_container
@@ -42,7 +42,7 @@ services:
 
   id-ums:
     container_name: id_ums_container
-    image: us-docker.pkg.dev/boldbi-294612/boldbi/bold-ums:16.3.5
+    image: syncfusion/bold-ums:17.1.30
     restart: always
     environment:
       - DEPLOY_MODE=docker_multi_container
@@ -61,7 +61,7 @@ services:
 
   bi-web:
     container_name: bi_web_container
-    image: us-docker.pkg.dev/boldbi-294612/boldbi/boldbi-server:16.3.5
+    image: syncfusion/boldbi-server:17.1.30
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -80,7 +80,7 @@ services:
 
   bi-api:
     container_name: bi_api_container
-    image: us-docker.pkg.dev/boldbi-294612/boldbi/boldbi-server-api:16.3.5
+    image: syncfusion/boldbi-server-api:17.1.30
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -99,7 +99,7 @@ services:
 
   bi-jobs:
     container_name: bi_jobs_container
-    image: us-docker.pkg.dev/boldbi-294612/boldbi/boldbi-server-jobs:16.3.5
+    image: syncfusion/boldbi-server-jobs:17.1.30
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -118,7 +118,7 @@ services:
 
   bi-dataservice:
     container_name: bi_dataservice_container
-    image: us-docker.pkg.dev/boldbi-294612/boldbi/boldbi-designer:16.3.5
+    image: syncfusion/boldbi-designer:17.1.30
     restart: always
     environment:                         ## Refer README.md for available environment variables.
     #   - widget_bing_map_enable=false
@@ -142,7 +142,7 @@ services:
 
   bi-etl:
     container_name: bi_etl_container
-    image: us-docker.pkg.dev/boldbi-294612/boldbi/bold-etl:16.3.5
+    image: syncfusion/bold-etl:17.1.30
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -161,7 +161,7 @@ services:
 
   bold-ai:
     container_name: bold_ai_container
-    image: us-docker.pkg.dev/boldbi-294612/boldbi/bold-ai:16.3.5
+    image: syncfusion/bold-ai:17.1.30
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -174,6 +174,25 @@ services:
         condition: service_healthy
     healthcheck:
         test: ["CMD", "curl", "-f", "http://localhost:8080/health-check"]
+        interval: 10s
+        timeout: 10s
+        retries: 5
+
+  bold-mcp:
+    container_name: bold_mcp_container
+    image: syncfusion/bold-mcp:17.1.30
+    restart: always
+    volumes:
+      - boldservices_data:/application/app_data
+    networks:
+      - boldservices
+    depends_on:
+      bi-web:
+        condition: service_started
+      id-web:
+        condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost/health-check"]
         interval: 10s
         timeout: 10s
         retries: 5
@@ -275,6 +294,43 @@ services:
         timeout: 10s
         retries: 5
 
+  reports-ai:
+    container_name: reports_ai_container
+    image: us-docker.pkg.dev/boldreports/multi-container/boldreports-ai:14.1.18
+    restart: always
+    volumes:
+      - boldservices_data:/application/app_data
+    networks:
+      - boldservices
+    depends_on:
+      reports-web:
+        condition: service_started
+      id-web:
+        condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost/health-check"]
+        interval: 10s
+        timeout: 10s
+        retries: 5
+
+  reports-mcp:
+    container_name: reports_mcp_container
+    image: us-docker.pkg.dev/boldreports/multi-container/boldreports-mcp:14.1.18
+    restart: always
+    volumes:
+      - boldservices_data:/application/app_data
+    networks:
+      - boldservices
+    depends_on:
+      reports-web:
+        condition: service_started
+      id-web:
+        condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost/health-check"]
+        interval: 10s
+        timeout: 10s
+        retries: 5
 
   reverse-proxy:
     container_name: nginx
@@ -308,6 +364,8 @@ services:
         condition: service_started
       bold-ai:
         condition: service_started
+      bold-mcp:
+        condition: service_started
       reports-web:
         condition: service_started
       reports-api:
@@ -317,6 +375,10 @@ services:
       reports-reportservice:
         condition: service_started
       reports-viewer:
+        condition: service_started
+      reports-ai:
+        condition: service_started
+      reports-mcp:
         condition: service_started
   pgdb:
     image: postgres:17
