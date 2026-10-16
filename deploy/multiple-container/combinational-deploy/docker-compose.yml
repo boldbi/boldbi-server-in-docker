@@ -199,7 +199,7 @@ services:
 
   reports-web:
     container_name: reports_web_container
-    image: us-docker.pkg.dev/boldreports/multi-container/boldreports-server:14.1.18
+    image: syncfusion/boldreports-server:15.1.10
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -216,7 +216,7 @@ services:
 
   reports-api:
     container_name: reports_api_container
-    image: us-docker.pkg.dev/boldreports/multi-container/boldreports-server-api:14.1.18
+    image: syncfusion/boldreports-server-api:15.1.10
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -235,7 +235,7 @@ services:
 
   reports-jobs:
     container_name: reports_jobs_container
-    image: us-docker.pkg.dev/boldreports/multi-container/boldreports-server-jobs:14.1.18
+    image: syncfusion/boldreports-server-jobs:15.1.10
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -256,7 +256,7 @@ services:
 
   reports-reportservice:
     container_name: reports_reportservice_container
-    image: us-docker.pkg.dev/boldreports/multi-container/boldreports-designer:14.1.18
+    image: syncfusion/boldreports-designer:15.1.10
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -277,7 +277,45 @@ services:
 
   reports-viewer:
     container_name: reports_viewer_container
-    image: us-docker.pkg.dev/boldreports/multi-container/boldreports-viewer:14.1.18
+    image: syncfusion/boldreports-viewer:15.1.10
+    restart: always
+    volumes:
+      - boldservices_data:/application/app_data
+    networks:
+      - boldservices
+    depends_on:
+      reports-web:
+        condition: service_started
+      id-web:
+        condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost/health-check"]
+        interval: 10s
+        timeout: 10s
+        retries: 5
+
+  reports-ai:
+    container_name: reports_ai_container
+    image: syncfusion/boldreports-ai:15.1.10
+    restart: always
+    volumes:
+      - boldservices_data:/application/app_data
+    networks:
+      - boldservices
+    depends_on:
+      reports-web:
+        condition: service_started
+      id-web:
+        condition: service_healthy
+    healthcheck:
+        test: ["CMD", "curl", "-f", "http://localhost/health-check"]
+        interval: 10s
+        timeout: 10s
+        retries: 5
+
+  reports-mcp:
+    container_name: reports_mcp_container
+    image: syncfusion/boldreports-mcp-server:15.1.10
     restart: always
     volumes:
       - boldservices_data:/application/app_data
@@ -337,6 +375,10 @@ services:
       reports-reportservice:
         condition: service_started
       reports-viewer:
+        condition: service_started
+      reports-ai:
+        condition: service_started
+      reports-mcp:
         condition: service_started
 
   pgdb:
