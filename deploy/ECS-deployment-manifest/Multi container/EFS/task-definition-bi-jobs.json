@@ -1,0 +1,84 @@
+{
+    "family": "<bi-jobs-task-definition-name>",
+    "containerDefinitions": [
+        {
+            "name": "<bi-jobs-container-name>",
+            "image": "syncfusion/boldbi-server-jobs:<update the latest image>",
+            "cpu": 512,
+            "memory": 1024,
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "name": "bi-jobs",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                { "name": "BI_DESIGNER_HELPER_SERVICE_URL", "value": "http://bi-dataservice-service:6007/bi/designer/helper" },
+                { "name": "ID_API_SERVICE_URL", "value": "http://id-api-service:6001/api" },
+                { "name": "BOLD_ETL_SERVICE_URL", "value": "http://bold-etl-service:6009" },
+                { "name": "ID_WEB_SERVICE_URL", "value": "http://id-web-service:6000" },
+                { "name": "BI_DESIGNER_SERVICE_URL", "value": "http://bi-dataservice-service:6007/bi/designer" },
+                { "name": "BOLD_ETL_BLAZOR_SERVICE_URL", "value": "http://bold-etl-service:6009/framework/blazor.server.js" },
+                { "name": "BI_JOBS_SERVICE_URL", "value": "http://bi-jobs-service:6006/bi/jobs" },
+                { "name": "BOLD_SERVICES_PV_USED", "value": "true" },
+                { "name": "BI_WEB_SERVICE_URL", "value": "http://bi-web-service:6004/bi" },
+                { "name": "BOLD_AI_SERVICE_URL", "value": "http://bold-ai-service:6010/aiservice" },
+                { "name": "BOLD_SERVICES_HOSTING_ENVIRONMENT", "value": "docker" },
+                { "name": "BI_API_SERVICE_URL", "value": "http://bi-api-service:6005/bi/api" },
+                { "name": "ID_UMS_SERVICE_URL", "value": "http://id-ums-service:6002/ums" },
+                { "name": "MCP_SERVICE_URL", "value": "http://bold-mcp-service:6011/mcp" }
+            ],
+            "mountPoints": [
+                {
+                   "sourceVolume": "<efs-volume-name>", // Replace with your EFS volume name
+                   "containerPath": "/application/app_data",
+                   "readOnly": false
+               }
+            ],
+            "volumesFrom": [],
+            "secrets": [],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "boldbi",
+                    "awslogs-region": "<aws-region>",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:80/health-check || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 10,
+                "retries": 3,
+                "startPeriod": 60
+            },
+            "systemControls": []
+        }
+    ],
+    "taskRoleArn": "<ecs-task-role-arn>", // Replace with your ECS Task Role ARN
+    "executionRoleArn": "<ecs-task-execution-role-arn>", // Replace with your ECS Execution Role ARN
+    "networkMode": "awsvpc",
+    "volumes": [
+        {
+           "name": "<efs-volume-name>", // Replace with your EFS volume name
+           "efsVolumeConfiguration": {
+               "fileSystemId": "<efs-file-system-id>", // Replace with your EFS File System ID
+               "rootDirectory": "/",
+               "transitEncryption": "ENABLED"
+           }
+       }
+    ],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "512",
+    "memory": "1024"
+}

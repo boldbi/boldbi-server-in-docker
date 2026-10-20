@@ -1,0 +1,83 @@
+{
+    "family": "<id-api-task-definition-name>",
+    "containerDefinitions": [
+        {
+            "name": "<id-api-container-name>",
+            "image": "syncfusion/bold-identity-api:<update the latest image>",
+            "cpu": 512,
+            "memory": 1024,
+            "portMappings": [
+                {
+                    "containerPort": 80,
+                    "hostPort": 80,
+                    "protocol": "tcp",
+                    "name": "id-api",
+                    "appProtocol": "http"
+                }
+            ],
+            "essential": true,
+            "environment": [
+                { "name": "BI_DESIGNER_HELPER_SERVICE_URL", "value": "http://bi-dataservice-service:6007/bi/designer/helper" },
+                { "name": "BI_DESIGNER_SERVICE_URL", "value": "http://bi-dataservice-service:6007/bi/designer" },
+                { "name": "BOLD_SERVICES_STORAGETYPE", "value": "3" },
+                { "name": "BI_JOBS_SERVICE_URL", "value": "http://bi-jobs-service:6006/bi/jobs" },
+                { "name": "BOLD_SERVICES_PV_USED", "value": "false" },
+                { "name": "BI_WEB_SERVICE_URL", "value": "http://bi-web-service:6004/bi" },
+                { "name": "BOLD_AI_SERVICE_URL", "value": "http://bold-ai-service:6010/aiservice" },
+                { "name": "APP_BASE_URL", "value": "https://<application-domain>" },
+                { "name": "BOLD_SERVICES_HOSTING_ENVIRONMENT", "value": "docker" },
+                { "name": "BI_API_SERVICE_URL", "value": "http://bi-api-service:6005/bi/api" },
+                { "name": "BOLD_SERVICES_AMAZON_BUCKET_NAME", "value": "<provide the s3 bucket name>" },
+                { "name": "ID_API_SERVICE_URL", "value": "http://id-api-service:6001/api" },
+                { "name": "BOLD_ETL_SERVICE_URL", "value": "http://bold-etl-service:6009" },
+                { "name": "BOLD_SERVICES_AMAZON_ROOTFOLDER_NAME", "value": "<provide the aws root folder name>" },
+                { "name": "ID_WEB_SERVICE_URL", "value": "http://id-web-service:6000" },
+                { "name": "BOLD_ETL_BLAZOR_SERVICE_URL", "value": "http://bold-etl-service:6009/framework/blazor.server.js" },
+                { "name": "BOLD_SERVICES_AWS_REGION", "value": "<aws-region>" }, // Example: us-east-1
+                { "name": "ID_UMS_SERVICE_URL", "value": "http://id-ums-service:6002/ums" },
+                { "name": "MCP_SERVICE_URL", "value": "http://bold-mcp-service:6011/mcp" }
+            ],
+            "mountPoints": [],
+            "volumesFrom": [],
+            "secrets": [
+                {
+                    "name": "BOLD_SERVICES_AWS_SECRET_ACCESS_KEY",
+                    "valueFrom": "arn:aws:secretsmanager:<aws-region>:<account-id>:secret:<secret-name>:BOLD_SERVICES_AWS_SECRET_ACCESS_KEY::"
+                },
+                {
+                    "name": "BOLD_SERVICES_AWS_ACCESS_KEY_ID",
+                    "valueFrom": "arn:aws:secretsmanager:<aws-region>:<account-id>:secret:<secret-name>:BOLD_SERVICES_AWS_ACCESS_KEY_ID::"
+                }
+            ],
+            "logConfiguration": {
+                "logDriver": "awslogs",
+                "options": {
+                    "awslogs-group": "boldbi",
+                    "awslogs-region": "<aws-region>",
+                    "awslogs-stream-prefix": "ecs"
+                }
+            },
+            "healthCheck": {
+                "command": [
+                    "CMD-SHELL",
+                    "curl -f http://localhost:80/health-check || exit 1"
+                ],
+                "interval": 30,
+                "timeout": 10,
+                "retries": 3,
+                "startPeriod": 60
+            },
+            "systemControls": []
+        }
+    ],
+    "taskRoleArn": "<ecs-task-role-arn>", // Replace with your ECS Task Role ARN
+    "executionRoleArn": "<ecs-task-execution-role-arn>", // Replace with your ECS Execution Role ARN
+    "networkMode": "awsvpc",
+    "volumes": [],
+    "placementConstraints": [],
+    "requiresCompatibilities": [
+        "FARGATE"
+    ],
+    "cpu": "512",
+    "memory": "1024"
+}
