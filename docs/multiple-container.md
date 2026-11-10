@@ -26,7 +26,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 		services:
 		id-web:
 			container_name: id_web_container
-			image: syncfusion/bold-identity:17.1.30
+			image: syncfusion/bold-identity:17.2.16
 			restart: always
 			environment:
 			- APP_BASE_URL=<app_base_url>
@@ -44,7 +44,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 
 		id-api:
 			container_name: id_api_container
-			image: syncfusion/bold-identity-api:17.1.30
+			image: syncfusion/bold-identity-api:17.2.16
 			restart: always
 			environment:
 			- DEPLOY_MODE=docker_multi_container
@@ -63,7 +63,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 
 		id-ums:
 			container_name: id_ums_container
-			image: syncfusion/bold-ums:17.1.30
+			image: syncfusion/bold-ums:17.2.16
 			restart: always
 			environment:
 			- DEPLOY_MODE=docker_multi_container
@@ -82,7 +82,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 
 		bi-web:
 			container_name: bi_web_container
-			image: syncfusion/boldbi-server:17.1.30
+			image: syncfusion/boldbi-server:17.2.16
 			restart: always
 			volumes: 
 			- boldservices_data:/application/app_data
@@ -101,7 +101,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 
 		bi-api:
 			container_name: bi_api_container
-			image: syncfusion/boldbi-server-api:17.1.30
+			image: syncfusion/boldbi-server-api:17.2.16
 			restart: always
 			volumes: 
 			- boldservices_data:/application/app_data
@@ -120,7 +120,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 
 		bi-jobs:
 			container_name: bi_jobs_container
-			image: syncfusion/boldbi-server-jobs:17.1.30
+			image: syncfusion/boldbi-server-jobs:17.2.16
 			restart: always
 			volumes: 
 			- boldservices_data:/application/app_data
@@ -139,7 +139,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 
 		bi-dataservice:
 			container_name: bi_dataservice_container
-			image: syncfusion/boldbi-designer:17.1.30
+			image: syncfusion/boldbi-designer:17.2.16
 			restart: always
 			environment:
 			- INSTALL_OPTIONAL_LIBS=mongodb,mysql,influxdb,snowflake,oracle,clickhouse,google
@@ -160,7 +160,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 
 		bi-etl:
 			container_name: bi_etl_container
-			image: syncfusion/bold-etl:17.1.30
+			image: syncfusion/bold-etl:17.2.16
 			restart: always
 			volumes:
 			- boldservices_data:/application/app_data
@@ -179,7 +179,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 
 		bold-ai:
 			container_name: bold_ai_container
-			image: syncfusion/bold-ai:17.1.30
+			image: syncfusion/bold-ai:17.2.16
 			restart: always
 			volumes:
 			- boldservices_data:/application/app_data
@@ -198,7 +198,7 @@ This quick-start guide demonstrates how to use Compose to set up and run Bold BI
 
 		boldbi-mcp-server:
 			container_name: bold_mcp_container
-			image: syncfusion/boldbi-mcp-server:17.1.30
+			image: syncfusion/boldbi-mcp-server:17.2.16
 			restart: always
 			volumes:
 			- boldservices_data:/application/app_data
