@@ -1,6 +1,6 @@
 services:
   id-web:
-    image: syncfusion/bold-identity:17.1.30
+    image: syncfusion/bold-identity:17.2.16
     restart: on-failure
     environment:
       - APP_BASE_URL=<app_base_url>     # use http://host.docker.internal to configure Bold BI in localhost
@@ -17,7 +17,7 @@ services:
         retries: 5
         
   id-api:
-    image: syncfusion/bold-identity-api:17.1.30
+    image: syncfusion/bold-identity-api:17.2.16
     restart: on-failure
     volumes: 
       - boldservices_data:/application/app_data
@@ -32,7 +32,7 @@ services:
         retries: 5
         
   id-ums:
-    image: syncfusion/bold-ums:17.1.30
+    image: syncfusion/bold-ums:17.2.16
     restart: on-failure
     volumes:
       - boldservices_data:/application/app_data
@@ -47,7 +47,7 @@ services:
         retries: 5
         
   bi-web:
-    image: syncfusion/boldbi-server:17.1.30
+    image: syncfusion/boldbi-server:17.2.16
     restart: on-failure
     volumes: 
       - boldservices_data:/application/app_data
@@ -62,7 +62,7 @@ services:
         retries: 5
         
   bi-api:
-    image: syncfusion/boldbi-server-api:17.1.30
+    image: syncfusion/boldbi-server-api:17.2.16
     restart: on-failure
     volumes: 
       - boldservices_data:/application/app_data
@@ -78,7 +78,7 @@ services:
         retries: 5
       
   bi-jobs:
-    image: syncfusion/boldbi-server-jobs:17.1.30
+    image: syncfusion/boldbi-server-jobs:17.2.16
     restart: on-failure
     volumes: 
       - boldservices_data:/application/app_data
@@ -94,7 +94,7 @@ services:
         retries: 5
       
   bi-dataservice:
-    image: syncfusion/boldbi-designer:17.1.30
+    image: syncfusion/boldbi-designer:17.2.16
     restart: on-failure
     # environment:                         ## Refer README.md for available environment variables.
     #   - widget_bing_map_enable=false
@@ -114,7 +114,7 @@ services:
         retries: 5
 
   bi-etl:
-    image: syncfusion/bold-etl:17.1.30
+    image: syncfusion/bold-etl:17.2.16
     restart: on-failure
     volumes:
       - boldservices_data:/application/app_data
@@ -130,7 +130,7 @@ services:
         retries: 5
 
   bold-ai:
-    image: syncfusion/bold-ai:17.1.30
+    image: syncfusion/bold-ai:17.2.16
     restart: on-failure
     volumes:
       - boldservices_data:/application/app_data
@@ -147,7 +147,7 @@ services:
 
   boldbi-mcp-server:
     container_name: bold_mcp_container
-    image: syncfusion/boldbi-mcp-server:17.1.30
+    image: syncfusion/boldbi-mcp-server:17.2.16
     restart: always
     volumes:
       - boldservices_data:/application/app_data
