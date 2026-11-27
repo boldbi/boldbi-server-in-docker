@@ -43,8 +43,8 @@ The following software requirements are necessary to run the Bold BI Enterprise 
 
 | Tags  | Last Modified(MM/DD/YYYY)| Purpose |
 | ------------- | ------------- | ------------- |
-| `17.3.14-eval` | 11/10/2026 | This Docker image is specifically designed to streamline the Bold BI evaluation process by integrating a PostgreSQL server within the Bold BI container. Please note that this image tag is intended for evaluation purposes only and should not be used in production environments. |
-| `17.3.14`, `latest` | 11/10/2026 | This tag is intended for production use. Select this variant if you prefer Debian as the base image for your deployment. |
+| `17.3.14-eval` | 11/27/2026 | This Docker image is specifically designed to streamline the Bold BI evaluation process by integrating a PostgreSQL server within the Bold BI container. Please note that this image tag is intended for evaluation purposes only and should not be used in production environments. |
+| `17.3.14`, `latest` | 11/27/2026 | This tag is intended for production use. Select this variant if you prefer Debian as the base image for your deployment. |
 
 # Deploying Bold BI Evaluation Image Using Docker Compose
 
