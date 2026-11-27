@@ -1,6 +1,6 @@
 services:
   boldbi:
-   image: syncfusion/boldbi
+   image: syncfusion/boldbi:17.3.14
    restart: always
    ports:
      - 8085:80
