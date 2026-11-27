@@ -53,7 +53,7 @@ The eval tag (17.3.14-eval) is specifically designed to streamline the Bold BI e
 1. Download the Docker Compose file by using the following command.
 
    ```sh
-   curl -o docker-compose.yml "https://raw.githubusercontent.com/boldbi/boldbi-docker/main/deploy/single-container-eval-no-license/docker-compose.yml"
+   curl -o docker-compose.yml "https://raw.githubusercontent.com/boldbi/boldbi-docker/v17.3.14/deploy/single-container-eval-no-license/docker-compose.yml"
    ```
 2. Run the command below. This command will start the Bold BI application container and display the Bold BI container logs, providing information about the installation status of the Bold BI application.
 

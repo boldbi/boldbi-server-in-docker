@@ -11,7 +11,7 @@ You can store the application data on your host machine to make the Bold BI cont
 1. Download the Docker Compose file by using the following command.
    
    ```sh
-   curl -o docker-compose.yml "https://raw.githubusercontent.com/boldbi/boldbi-docker/main/deploy/single-container-with-host-path/docker-compose.yml"
+   curl -o docker-compose.yml "https://raw.githubusercontent.com/boldbi/boldbi-docker/v17.3.14/deploy/single-container-with-host-path/docker-compose.yml"
    ```
 2. Open the Docker Compose file, fill the BOLD_SERVICES_UNLOCK_KEY value, and save it. You can download the offline Bold BI unlock key from the [downloads](https://www.boldbi.com/account) page.
 

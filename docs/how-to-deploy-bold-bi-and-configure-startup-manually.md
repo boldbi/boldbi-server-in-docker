@@ -7,7 +7,7 @@ In the following section, we will deploy a single container Bold BI application 
 1. Download docker compose file using the following command.
    
    ```sh
-   curl -o docker-compose.yml "https://raw.githubusercontent.com/boldbi/boldbi-docker/main/deploy/single-container/docker-compose.yml"
+   curl -o docker-compose.yml "https://raw.githubusercontent.com/boldbi/boldbi-docker/v17.3.14/deploy/single-container/docker-compose.yml"
    ``` 
 2. Run docker compose up command.
    

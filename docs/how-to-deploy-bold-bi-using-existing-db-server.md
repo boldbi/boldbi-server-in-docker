@@ -5,7 +5,7 @@ In the following section, we are going to run the Bold BI application by passing
 1. Download docker compose file using the following command.
    
    ```sh
-   curl -o docker-compose.yml "https://raw.githubusercontent.com/boldbi/boldbi-docker/main/deploy/single-container-with-env-variable/docker-compose.yml"
+   curl -o docker-compose.yml "https://raw.githubusercontent.com/boldbi/boldbi-docker/v17.3.14/deploy/single-container-with-env-variable/docker-compose.yml"
    ```
 3. Open the docker compose file and fill the mandatory fields - <b>Unlock Key</b> and <b>Database details</b>
 
